@@ -11,7 +11,7 @@
   "beforePack": ".electron-vite/beforePack.js",
 
 
-  "productName": "electron-vite-template",
+  "productName": "求生公益服社区",
   "appId": "org.sky.electron-vite-template",
   "directories": {
     "output": "build"

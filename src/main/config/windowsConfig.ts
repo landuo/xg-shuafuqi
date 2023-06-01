@@ -21,7 +21,7 @@ export const mainWindowConfig: BrowserWindowConstructorOptions = {
 };
 
 export const otherWindowConfig: BrowserWindowConstructorOptions = {
-  height: 595,
+  height: 600,
   useContentSize: true,
   width: 1140,
   autoHideMenuBar: true,

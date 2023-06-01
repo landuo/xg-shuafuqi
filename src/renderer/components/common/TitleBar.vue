@@ -10,7 +10,7 @@
     <!-- 菜单栏位置 -->
     <div></div>
     <!-- 中间标题位置 -->
-    <div style="-webkit-app-region: drag" class="title"></div>
+    <div style="-webkit-app-region: drag" class="title">求生公益服社区</div>
     <div class="controls-container">
       <div class="windows-icon-bg" @click="Mini">
         <img src="@renderer/assets/icons/svg/mini.svg" class="icon-size" />
@@ -81,6 +81,7 @@ const Close = () => {
   }
   .title {
     text-align: center;
+    font-size: medium;
   }
   .logo {
     margin-left: 20px;

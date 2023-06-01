@@ -1,73 +1,31 @@
 <template>
   <div id="wrapper">
     <div class="center">
-      <div><el-text class="title" type="success">香锅云服务器</el-text></div>
-      <el-row>
-        <el-col :span="6">
-          <el-statistic :value="1509343481" group-separator="" title="香锅QQ" />
-        </el-col>
-        <el-col :span="6">
-          <el-statistic :value="currentPlayerCount">
-            <template #title>
-              <div style="display: inline-flex; align-items: center">
-                服务器人数
-              </div>
-            </template>
-            <template #suffix>/{{ totalPlayerCount }}</template>
-          </el-statistic>
-        </el-col>
-        <el-col :span="6">
-          <el-statistic :value="onlineServer">
-            <template #title>
-              <div style="display: inline-flex; align-items: center">
-                在线服务器
-              </div>
-            </template>
-            <template #suffix>/{{ totalServer }}</template>
-          </el-statistic>
-        </el-col>
-        <el-col :span="6">
-          <el-statistic :value="null">
-            <template #title>
-              <div style="display: inline-flex; align-items: center">
-                <el-button type="success" round @click="refreshTableData"
-                  >刷新列表</el-button
-                >
-              </div>
-            </template>
-            <!-- <template #suffix>/20</template> -->
-          </el-statistic>
-        </el-col>
-      </el-row>
+      <el-descriptions class="desc" column="5">
+        <el-descriptions-item label="服务器人数" align="center">{{ currentPlayerCount }}/{{ totalPlayerCount
+        }}</el-descriptions-item>
+        <el-descriptions-item label="在线服务器" align="center">{{ onlineServer }}/{{ totalServer }}</el-descriptions-item>
+        <el-descriptions-item label="QQ群" align="center">2719813</el-descriptions-item>
+        <el-descriptions-item align="center"><el-button type="success" round
+            @click="refreshTableData">刷新列表</el-button></el-descriptions-item>
+        <el-descriptions-item align="center"><el-button type="success" round
+            @click="joinQQGroup">加入群聊</el-button></el-descriptions-item>
+      </el-descriptions>
 
-      <div style="margin-bottom: 10px">
-        <el-radio-group
-          v-model="gameMode"
-          @change="changeGameMode"
-          size="large"
-        >
-          <el-radio-button label="战役" />
-          <el-radio-button label="对抗" />
-        </el-radio-group>
-      </div>
-      <el-table
-        :data="filterTableData"
-        stripe
-        border
-        height="500"
-        style="width: auto"
-        :default-sort="{ prop: 'players', order: 'descending' }"
-      >
+      <el-descriptions size="large">
+          <el-descriptions-item label-align="center">
+            <el-radio-group v-model="gameMode" @change="changeGameMode" size="large">
+              <el-radio-button label="战役" />
+              <el-radio-button label="对抗" />
+            </el-radio-group>
+          </el-descriptions-item>
+        </el-descriptions>
+      <el-table :data="filterTableData" stripe border class="serverList"
+        :default-sort="{ prop: 'players', order: 'descending' }">
         <el-table-column fixed prop="name" label="服务器名" min-width="200" />
         <el-table-column prop="url" label="地址" v-if="false" />
         <el-table-column prop="map" label="当前地图" min-width="180" />
-        <el-table-column
-          label="人数"
-          prop="players"
-          sortable
-          :custom="true"
-          min-width="60"
-        >
+        <el-table-column label="人数" prop="players" sortable :custom="true" min-width="60">
           <!-- 自定义插槽 -->
           <template #default="{ row }">
             <el-tag>
@@ -86,31 +44,19 @@
         </el-table-column>
         <el-table-column label="操作" min-width="150">
           <template #default="{ row }">
-            <el-button type="primary" @click="joinServer(row)"
-              >加入服务器</el-button
-            >
+            <el-button type="primary" @click="joinServer(row)">加入服务器</el-button>
             <el-button type="info" @click="showServerInfo(row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-dialog
-        v-model="dialogVisible"
-        :before-close="handleClose"
-        title="服务器信息"
-        width="50%"
-      >
+      <el-dialog v-model="dialogVisible" :before-close="handleClose" title="服务器信息" width="50%">
         <div v-if="serverInfo" style="margin: 0px 0 10px 20px">
           <p>名称：{{ serverInfo.name }}</p>
           <p>地图：{{ serverInfo.map }}</p>
           <p>人数：{{ serverInfo.players }}/{{ serverInfo.maxPlayers }}</p>
           <p>延迟：{{ serverInfo.nowPing }}</p>
         </div>
-        <el-table
-          v-if="serverInfo"
-          :data="tablePlayer"
-          border
-          style="width: auto"
-        >
+        <el-table v-if="serverInfo" :data="tablePlayer" border style="width: auto">
           <el-table-column fixed prop="name" label="玩家" />
           <el-table-column prop="score" label="比分" />
           <el-table-column prop="duration" label="时间" />
@@ -124,8 +70,8 @@
 <script lang="ts" setup>
 import { getServerList, getPlayers } from "../api/l4d2";
 import { ElMessage } from "element-plus";
-import { reactive, onMounted, ref, computed, watch } from "vue";
-const { shell } = require("electron");
+import { reactive, onMounted, ref, onUnmounted } from "vue";
+const { ipcRenderer, shell } = require("electron");
 const { Server } = require("@fabricio-191/valve-server-query");
 
 const tableData = reactive([]);
@@ -141,6 +87,7 @@ let gameMode = ref("战役");
 
 onMounted(async () => {
   refreshTableData();
+  ipcRenderer.invoke("hot-update");
 });
 
 // 定义刷新表格数据的方法
@@ -155,9 +102,7 @@ function refreshTableData() {
       totalPlayerCount.value = res.data.list.reduce((total, item) => {
         return total + item.maxPlayers;
       }, 0);
-
-      tableData.splice(0, tableData.length, ...res.data.list); // 使用扩展运算符替换表格数据，而不是给表格数据重新赋值
-      tableData.forEach(async (element) => {
+      res.data.list.forEach(async (element) => {
         let addr = element.url.split(":");
         let server = await Server({
           ip: addr[0],
@@ -166,6 +111,7 @@ function refreshTableData() {
         });
         element.times = server.lastPing;
       });
+      tableData.splice(0, tableData.length, ...res.data.list); // 使用扩展运算符替换表格数据，而不是给表格数据重新赋值
       let mode = gameMode.value === "战役" ? 1 : 2;
       filterTableData.splice(
         0,
@@ -238,6 +184,32 @@ function handleClose() {
 const timesTagType = (times) => {
   return times > 40 ? "danger" : "success";
 };
+
+function joinQQGroup() {
+  shell.openExternal("https://qm.qq.com/cgi-bin/qm/qr?k=a0gzjDW6QnWlzus-9M6S2jsLV_a0bvTn&jump_from=webapi&authKey=kkHv2DtSZ8jxdyaw+GbKomHzQIvcbJHQ63kruh5NkI9uqkJBdJPdp4vJRBLOo5eT")
+}
+
+ipcRenderer.on("hot-update-status", (event, msg) => {
+  switch (msg.status) {
+    case "downloading":
+      ElMessage("检测到新版本，正在更新");
+      break;
+    case "moving":
+      // ElMessage("正在移动文件");
+      break;
+    case "finished":
+      ElMessage.success("更新成功,请重启");
+      break;
+    case "failed":
+      ElMessage.error(msg.message.message);
+      break;
+    default:
+      break;
+  }
+});
+onUnmounted(() => {
+  ipcRenderer.removeAllListeners("hot-update-status");
+});
 </script>
 
 <style>
@@ -246,26 +218,44 @@ const timesTagType = (times) => {
   margin: 0;
   padding: 0;
 }
+
 body {
   font-family: "Source Sans Pro", sans-serif;
 }
+
 .title {
   font-size: xx-large;
 }
+
+.el-descriptions__label {
+  font-size: 20px;
+}
+
+.el-descriptions__content {
+  font-size: 20px;
+}
+
 #wrapper {
-  padding: 30px 20px 20px 20px;
+  padding: 40px 20px 20px 20px;
 }
 
 .el-row {
   text-align: center;
   margin: 10px 0;
 }
+.serverList {
+  height: 550px;
+  width: auto;
+}
+
 .el-statistic__head {
   font-size: larger;
 }
+
 .delay-time {
   color: red !important;
 }
+
 .el-dialog .el-dialog__header {
   text-align: center;
 }

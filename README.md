@@ -22,7 +22,7 @@ To run a project, you need to have **node version 16** or higher and **use yarn 
 
 ```bash
 # 求生之路刷服器
-  第一次更新：添加了自定义风格设置，可以上传背景图和修改颜色。
+  我的第一次更新：添加了自定义风格设置，可以上传背景图和修改颜色。
 # Clone this repository
 $ git clone https://github.com/umbrella22/electron-vite-template.git
 # Go into the repository

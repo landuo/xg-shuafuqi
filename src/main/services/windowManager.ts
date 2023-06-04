@@ -32,6 +32,7 @@ class MainInit {
   // 主窗口函数
   createMainWindow() {
     this.mainWindow = new BrowserWindow({
+      webPreferences: { experimentalFeatures: true },
       titleBarStyle: IsUseSysTitle ? "default" : "hidden",
       ...Object.assign(mainWindowConfig, {}),
     });

@@ -35,6 +35,9 @@ html {
   }
 }
 
+ul{
+  list-style: none;
+}
 *,
 *:before,
 *:after {
@@ -76,4 +79,58 @@ a:hover {
 
 .app-container {
   padding: 20px;
+}
+
+
+@font-face {
+  font-family: "DS";   
+  src: url("../assets/DS-DIGII.TTF");  
+}
+*{
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  background-color: var(--bingyu-color-bg1);
+}
+body{
+width:auto;
+}
+.window-title{
+  background-color: rgb(255, 255, 255,.1) !important;
+  color: var(--bingyu-color-text1);
+}
+//这些自定义样式覆盖了原来的  亮白色  样式
+
+.el-tag{
+  border: none;
+}
+.el-button--success{
+  border: none;
+}
+.el-dialog {
+  background-color: var(--bingyu-color-bg3);
+}
+
+:root{
+  --el-bg-color:none;
+  --el-fill-color-lighter:none;
+  --el-color-primary-light-9:none;
+  --el-color-danger-light-9:rgb(200,200,200,0.8);
+  --el-color-success-light-9:rgb(50,50,50,0.8);
+
+}
+.el-table .el-table__cell{
+z-index: 0;
+}
+.el-tag.el-tag--danger {
+  --el-tag-bg-color: none;
+  --el-tag-border-color: none;
+  --el-tag-hover-color: none;
+}
+.el-tag.el-tag--success{
+  --el-tag-bg-color:none;
+  --el-tag-border-color:none;
+  --el-tag-hover-color:none;
 }

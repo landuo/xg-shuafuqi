@@ -21,12 +21,15 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
     "@fabricio-191/valve-server-query": "^4.1.9",
     "axios": "^1.4.0",
+    "electron": "^25.0.1",
     "electron-log": "^4.4.8",
     "electron-updater": "^5.3.0",
     "express": "^4.18.2",
     "glob": "^10.2.2",
+    "rollup": "^3.23.0",
     "semver": "^7.5.0"
   },
   "devDependencies": {
@@ -46,8 +49,8 @@
     "cross-env": "^7.0.3",
     "del": "^7.0.0",
     "dotenv": "^16.0.3",
-    "electron": "24.1.3",
-    "electron-builder": "^23.6.0",
+    "electron": "^24.1.3",
+    "electron-builder": "latest",
     "electron-devtools-vendor": "^1.2.0",
     "electron_updater_node_cli": "^0.3.3",
     "electron_updater_node_core": "^0.3.3",

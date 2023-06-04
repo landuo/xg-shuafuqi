@@ -5,7 +5,7 @@ export const mainWindowConfig: BrowserWindowConstructorOptions = {
   height: 720,
   useContentSize: true,
   center: true,
-  width: 900,
+  width: 1000,
   resizable: false,
   show: false,
   frame: IsUseSysTitle,

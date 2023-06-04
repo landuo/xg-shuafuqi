@@ -71,7 +71,7 @@ const Close = () => {
   -webkit-app-region: drag;
   position: fixed;
   top: 0;
-  z-index: 99999;
+  z-index: 9999;
   .icon-logo {
     width: 1em;
     height: 1em;

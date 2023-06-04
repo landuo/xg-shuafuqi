@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, session } from 'electron'
+import { app,session } from 'electron'
 import InitWindow from './services/windowManager'
 import DisableButton from './config/DisableButton'
 function onAppReady() {
@@ -36,3 +36,5 @@ if (process.defaultApp) {
 } else {
   app.setAsDefaultProtocolClient('electron-vue-template')
 }
+
+

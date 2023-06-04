@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import { onUnmounted, ref, watch } from "vue";
+import { ElButton,ElProgress } from "element-plus";
 const { platform } = require("os");
 const { ipcRenderer, shell } = require("electron");
 const props = defineProps({

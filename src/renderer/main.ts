@@ -17,6 +17,7 @@ import 'element-plus/es/components/message-box/style/css'
 import 'element-plus/es/components/progress/style/css'
 import 'element-plus/es/components/pagination/style/css'
 import './styles/index.scss'
+import './styles/recover.scss'
 import './assets/click.js'
 
 import './permission'

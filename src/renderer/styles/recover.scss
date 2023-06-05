@@ -1,0 +1,207 @@
+
+
+
+@font-face {
+  font-family: "DS";   
+  src: url("../assets/DS-DIGII.TTF");  
+}
+
+
+//色彩调整与覆盖  原本写在index.css中，单独拿出写成一个文件
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body{
+width:auto;
+}
+.window-title{
+  background-color: rgb(255, 255, 255,.1) !important;
+  backdrop-filter: blur(2px);
+  z-index: 1500 !important;
+}
+
+// 初始黑色
+:root{
+  --bingyu-color-bg1:rgb(50,50,50,1);
+  --bingyu-color-bg2:rgb(40,40,40,1);
+  --bingyu-color-bg3: rgba(31,31,31,1);
+  --bingyu-color-bg4:rgba(0,0,0,.9);
+  --bingyu-color-text1: rgb(230, 230, 230);
+  --bingyu-color-text2: rgb(230, 230, 230);
+  --bingyu-color-text3: rgb(230, 230, 230);
+  --bingyu-color-btn1: rgb(50,50,50,1);
+  --bingyu-color-btn2: rgb(50,50,50,1);
+  --bingyu-color-btn3: rgb(50,50,50,1);
+  --bingyu-color-btn1-hover:rgba(100,100,100,0.5);
+  --el-border-color-lighter: rgba(40,40,40,1);
+  --el-fill-color-light: rgba(40,40,40,1);
+}
+
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-bg1",
+//   "rgb(255,255,255,0)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-bg2",
+//   "rgb(255,255,255,0)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-bg3",
+//   "rgba(255,255,255,0)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-bg4",
+//   "rgba(240,240,240,1)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-text1",
+//   "rgb(0, 0, 0)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-text2",
+//   "rgb(255, 255, 255)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-text3",
+//   "rgb(40,40,40)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-btn1",
+//   "rgb(103,194,58,1)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-btn2",
+//   "rgb(64,158,255,1)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-btn3",
+//   "rgb(144,147,158,1)"
+// );
+// document.documentElement.style.setProperty(
+//   "--bingyu-color-btn1-hover",
+//   "rgb(100,100,100,0.7)"
+// );
+// document.documentElement.style.setProperty(
+//   "--el-border-color-lighter",
+//   "rgb(40,40,40,.3)"
+// );
+// document.documentElement.style.setProperty(
+//   "--el-fill-color-light",
+//   "rgb(64, 200, 255)"
+// );
+
+
+:root{
+  --el-bg-color:none;
+  --el-fill-color-lighter:none;
+  --el-color-primary-light-9:none;
+  --el-color-danger-light-9:rgb(200,200,200,.8);
+  --el-color-success-light-9:rgb(50,50,50,.8);
+  --el-fill-color-blank:none;
+  --el-border:none;
+  --el-overlay-color-lighter:rgba(0,0,0,0.2)
+  --el-text-color-secondary:var(--bingyu-color-text2)
+}
+.el-overlay{
+  background-color: rgb(0,0,0,.2)
+}
+.el-tag{
+  border: none;
+}
+.el-button--success{
+  border: none;
+}
+.el-table_1_column_3 .el-tag{
+  color:rgba(64,158,255,1) ;
+}
+.el-table .el-table__cell{
+z-index: 0;
+}
+.el-tag.el-tag--danger {
+  --el-tag-bg-color: none;
+  --el-tag-border-color: none;
+  --el-tag-hover-color: none;
+}
+.el-tag.el-tag--success{
+  --el-tag-bg-color:none;
+  --el-tag-border-color:none;
+  --el-tag-hover-color:none;
+}
+.el-button.is-round{
+  border-radius: 4px !important;
+}
+.border{
+  --el-border-color-lighter:rgba(100,100,100,.5) ;
+}
+.el-dialog__headerbtn:hover{
+background-color: rgba(255,0,0,.7);
+}
+
+
+// ////////////////////////////////////////
+.mainView{
+  background-color: var(--bingyu-color-bg1);
+}
+.add .addtime,
+.center{
+  background-color: var(--bingyu-color-bg2);
+  box-shadow: var(--bingyu-color-bshadow);
+
+}
+.serverList{
+  background-color: var(--bingyu-color-bg3);
+}
+.add .addtime .colorIndex,
+.el-dialog{
+  background-color: var(--bingyu-color-bg4);
+  box-shadow: ar(--bingyu-color-bshadow)
+}
+.window-title .title{
+  color:var(--bingyu-color-text1);
+}
+
+
+.el-button{
+  color:var(--bingyu-color-text2);
+}
+
+.el-radio-button__inner,
+.el-radio-button__original-radio:checked+.el-radio-button__inner,
+.el-table thead,
+.el-table,
+.el-dialog__body,
+.el-table__empty-text,
+.el-descriptions__content:not(.is-bordered-label),
+.el-descriptions__label:not(.is-bordered-label){
+   color:var(--bingyu-color-text3);
+}
+.el-button--success{
+  background-color: var(--bingyu-color-btn1)
+}
+.el-radio-button__original-radio:checked+.el-radio-button__inner,
+.el-button--primary{
+  background-color: var(--bingyu-color-btn2)
+}
+.el-button--info{
+  background-color: var(--bingyu-color-btn3)
+}
+.el-button:hover{
+  background-color: var(--bingyu-color-btn1-hover);
+}
+
+.el-descriptions__content:not(.is-bordered-label),
+.el-descriptions__label:not(.is-bordered-label){
+  font-size: 18px;
+  font-weight: 500;
+}
+
+// body::before{
+//   content: "";
+//   height: 100%;
+//   width: 100%;
+//   position: absolute;
+//   backdrop-filter: blur(0px);
+// }

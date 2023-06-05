@@ -1,0 +1,12 @@
+{
+  "prettier.printWidth": 120, 
+  "prettier.tabWidth": 2, 
+  "prettier.useTabs": false, 
+  "prettier.semi": true, 
+  "prettier.singleQuote": true, 
+  "prettier.proseWrap": "preserve", 
+  "prettier.arrowParens": "avoid", 
+  "prettier.bracketSpacing": true, 
+  "prettier.endOfLine": "auto", 
+  "prettier.trailingComma": "es5"
+}

@@ -1,11 +1,7 @@
 <template>
   <div id="wrapper">
     <div class="center">
-      <div><el-text class="title" type="success">香锅云服务器</el-text></div>
       <el-row>
-        <el-col :span="6">
-          <el-statistic :value="1509343481" group-separator="" title="香锅QQ" />
-        </el-col>
         <el-col :span="6">
           <el-statistic :value="currentPlayerCount">
             <template #title>
@@ -27,40 +23,47 @@
           </el-statistic>
         </el-col>
         <el-col :span="6">
-          <el-statistic :value="null">
-            <template #title>
+          <el-statistic :value="2719813" group-separator="" title="QQ群" />
+        </el-col>
+        <!-- <el-col :span="6"> -->
+          <!-- <el-statistic :value="null">
+            <template #title> -->
               <div style="display: inline-flex; align-items: center">
                 <el-button type="success" round @click="refreshTableData"
                   >刷新列表</el-button
                 >
+                <el-button type="success" round @click="joinQQGroup"
+                  >加入群聊</el-button
+                >
               </div>
-            </template>
-            <!-- <template #suffix>/20</template> -->
-          </el-statistic>
-        </el-col>
+            <!-- </template>
+          </el-statistic> -->
+        <!-- </el-col> -->
       </el-row>
 
-      <div style="margin-bottom: 10px">
+      
+      <el-row>
+        <el-text size="large" style="margin: 0 10px;">模式选择</el-text>
         <el-radio-group
           v-model="gameMode"
           @change="changeGameMode"
           size="large"
         >
-          <el-radio-button label="战役" />
+          <el-radio-button label="战役" class="custom-radio" />
           <el-radio-button label="对抗" />
         </el-radio-group>
-      </div>
+      </el-row>
       <el-table
         :data="filterTableData"
         stripe
         border
-        height="500"
+        height="540"
         style="width: auto"
         :default-sort="{ prop: 'players', order: 'descending' }"
       >
         <el-table-column fixed prop="name" label="服务器名" min-width="200" />
         <el-table-column prop="url" label="地址" v-if="false" />
-        <el-table-column prop="map" label="当前地图" min-width="180" />
+        <el-table-column prop="map" label="当前地图" min-width="150" />
         <el-table-column
           label="人数"
           prop="players"
@@ -77,7 +80,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="times" label="延迟" sortable min-width="50">
+        <el-table-column prop="times" label="延迟" sortable min-width="60">
           <template #default="scope">
             <el-tag :type="timesTagType(scope.row.times)">
               {{ scope.row.times }}
@@ -156,8 +159,7 @@ function refreshTableData() {
         return total + item.maxPlayers;
       }, 0);
 
-      tableData.splice(0, tableData.length, ...res.data.list); // 使用扩展运算符替换表格数据，而不是给表格数据重新赋值
-      tableData.forEach(async (element) => {
+      res.data.list.forEach(async (element) => {
         let addr = element.url.split(":");
         let server = await Server({
           ip: addr[0],
@@ -166,6 +168,7 @@ function refreshTableData() {
         });
         element.times = server.lastPing;
       });
+      tableData.splice(0, tableData.length, ...res.data.list); // 使用扩展运算符替换表格数据，而不是给表格数据重新赋值
       let mode = gameMode.value === "战役" ? 1 : 2;
       filterTableData.splice(
         0,
@@ -179,23 +182,28 @@ function refreshTableData() {
     })
     .catch((err) => {
       console.error(err);
-      ElMessage({
-        type: "error",
-        message: "刷新列表失败，请联系管理员",
-      });
+      // ElMessage({
+      //   type: "error",
+      //   message: "刷新列表失败，请联系管理员",
+      // });
     });
 }
 
 function changeGameMode(value) {
   refreshTableData();
-  let mode = value === "战役" ? 1 : 2;
-  filterTableData.splice(
-    0,
-    filterTableData.length,
-    ...tableData.filter((row) => row.type === mode)
-  );
+  // let mode = value === "战役" ? 1 : 2;
+  // filterTableData.splice(
+  //   0,
+  //   filterTableData.length,
+  //   ...tableData.filter((row) => row.type === mode)
+  // );
 }
 
+function joinQQGroup() {
+  shell.openExternal(
+    "https://qm.qq.com/cgi-bin/qm/qr?k=a0gzjDW6QnWlzus-9M6S2jsLV_a0bvTn&jump_from=webapi&authKey=kkHv2DtSZ8jxdyaw+GbKomHzQIvcbJHQ63kruh5NkI9uqkJBdJPdp4vJRBLOo5eT"
+  );
+}
 function showServerInfo(row) {
   getPlayers({ url: row.url })
     .then(async (res) => {
@@ -268,5 +276,13 @@ body {
 }
 .el-dialog .el-dialog__header {
   text-align: center;
+}
+.modeSelect {
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -197,11 +197,18 @@ background-color: rgba(255,0,0,.7);
   font-size: 18px;
   font-weight: 500;
 }
-
-// body::before{
-//   content: "";
-//   height: 100%;
-//   width: 100%;
-//   position: absolute;
-//   backdrop-filter: blur(0px);
-// }
+.addonLink .el-dropdown .el-dropdown__caret-button.el-button::before {
+  background-color: rgb(64, 158, 255);
+  width: 2px;
+  opacity: initial;
+  height: 38px;
+  top: 0;
+}
+.addonLink .addonbtn .el-button--large{
+  height: 38px;
+}
+.el-dropdown__popper.el-popper{
+  border: none;
+  border-radius: 4px;
+  background-color: var(--bingyu-color-bg4);
+}

@@ -48,6 +48,7 @@
               ></div>
               <el-radio-button label="对抗" />
             </el-radio-group>
+            <OpenAddon class="OpenAddon"></OpenAddon>
           </el-descriptions-item>
         </el-descriptions>
         <el-table
@@ -139,6 +140,7 @@ import {
   ElRadioGroup,
 } from "element-plus";
 import Time from "./common/Time.vue";
+import OpenAddon from "./common/OpenAddon.vue";
 import { reactive, onMounted, ref, onUnmounted } from "vue";
 const { ipcRenderer, shell } = require("electron");
 const { Server } = require("@fabricio-191/valve-server-query");
@@ -355,5 +357,8 @@ tr {
 }
 .elbtn:focus {
   outline: none;
+}
+.OpenAddon {
+  float: right;
 }
 </style>

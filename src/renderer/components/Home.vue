@@ -25,25 +25,19 @@
         <el-col :span="6">
           <el-statistic :value="2719813" group-separator="" title="QQ群" />
         </el-col>
-        <!-- <el-col :span="6"> -->
-          <!-- <el-statistic :value="null">
-            <template #title> -->
-              <div style="display: inline-flex; align-items: center">
-                <el-button type="success" round @click="refreshTableData"
-                  >刷新列表</el-button
-                >
-                <el-button type="success" round @click="joinQQGroup"
-                  >加入群聊</el-button
-                >
-              </div>
-            <!-- </template>
-          </el-statistic> -->
-        <!-- </el-col> -->
+        <!-- 不需要加el-col，否则会不居中 -->
+          <div style="display: inline-flex; align-items: center">
+            <el-button type="success" round @click="refreshTableData"
+              >刷新列表</el-button
+            >
+            <el-button type="success" round @click="joinQQGroup"
+              >加入群聊</el-button
+            >
+          </div>
       </el-row>
 
-      
-      <el-row>
-        <el-text size="large" style="margin: 0 10px;">模式选择</el-text>
+      <!-- <el-row>
+        <el-text size="large" style="margin: 0 10px">模式选择</el-text>
         <el-radio-group
           v-model="gameMode"
           @change="changeGameMode"
@@ -52,12 +46,13 @@
           <el-radio-button label="战役" class="custom-radio" />
           <el-radio-button label="对抗" />
         </el-radio-group>
-      </el-row>
+        
+      </el-row> -->
       <el-table
         :data="filterTableData"
         stripe
         border
-        height="540"
+        height="595"
         style="width: auto"
         :default-sort="{ prop: 'players', order: 'descending' }"
       >
@@ -88,6 +83,13 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" min-width="150">
+          <template #header>
+            <el-input
+              v-model="search"
+              placeholder="根据服务器名搜索"
+              @change="searchWithName"
+            />
+          </template>
           <template #default="{ row }">
             <el-button type="primary" @click="joinServer(row)"
               >加入服务器</el-button
@@ -127,7 +129,7 @@
 <script lang="ts" setup>
 import { getServerList, getPlayers } from "../api/l4d2";
 import { ElMessage } from "element-plus";
-import { reactive, onMounted, ref, computed, watch } from "vue";
+import { reactive, onMounted, ref } from "vue";
 const { shell } = require("electron");
 const { Server } = require("@fabricio-191/valve-server-query");
 
@@ -140,11 +142,23 @@ let onlineServer = ref(0);
 let totalServer = ref(0);
 let serverInfo = ref(null);
 let dialogVisible = ref(false);
-let gameMode = ref("战役");
+// let gameMode = ref("战役");
+const search = ref("");
 
 onMounted(async () => {
   refreshTableData();
 });
+
+function searchWithName() {
+  // let mode = gameMode.value === "战役" ? 1 : 2;
+  filterTableData.splice(
+    0,
+    filterTableData.length,
+    ...tableData.filter(
+      (row) => (!search.value || row.name.includes(search.value))
+    )
+  );
+}
 
 // 定义刷新表格数据的方法
 function refreshTableData() {
@@ -169,11 +183,10 @@ function refreshTableData() {
         element.times = server.lastPing;
       });
       tableData.splice(0, tableData.length, ...res.data.list); // 使用扩展运算符替换表格数据，而不是给表格数据重新赋值
-      let mode = gameMode.value === "战役" ? 1 : 2;
       filterTableData.splice(
         0,
         filterTableData.length,
-        ...tableData.filter((row) => row.type === mode)
+        ...tableData
       );
       ElMessage({
         type: "success",
@@ -191,12 +204,6 @@ function refreshTableData() {
 
 function changeGameMode(value) {
   refreshTableData();
-  // let mode = value === "战役" ? 1 : 2;
-  // filterTableData.splice(
-  //   0,
-  //   filterTableData.length,
-  //   ...tableData.filter((row) => row.type === mode)
-  // );
 }
 
 function joinQQGroup() {
